@@ -58,4 +58,4 @@ footer{background:#f4f6f8;border-top:1px solid var(--line);padding:24px 0;color:
  .results-area,.quote-grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.quote-options{grid-template-columns:1fr}
  h1{font-size:52px}.section-title{font-size:30px}
 }
-@media(max-width:520px){.services,.steps,.pricing,.photo-pair{grid-template-columns:1fr}.price-card:last-child{grid-column:auto}.hero-photo img{height:245px}.btn{width:100%}}
+@media(max-width:520px){.services{grid-template-columns:repeat(2,1fr);gap:10px}.services .card{padding:16px 8px}.services .card .big{font-size:27px}.services .card h3{font-size:15px;line-height:1.2}.steps,.pricing,.photo-pair{grid-template-columns:1fr}.price-card:last-child{grid-column:auto}.hero-photo img{height:245px}.btn{width:100%}}
