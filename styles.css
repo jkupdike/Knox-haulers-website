@@ -67,3 +67,9 @@ footer{background:#f4f6f8;border-top:1px solid var(--line);padding:24px 0;color:
   .photo-pair .photo-slot:first-child img{object-position:center 52%}
   .photo-pair .photo-slot:nth-child(2) img{object-position:center 48%}
 }
+
+/* Trailer photo crop: zoom slightly to reduce parking-lot lines */
+.hero-photo img{
+  transform:scale(1.12);
+  transform-origin:center center;
+}
