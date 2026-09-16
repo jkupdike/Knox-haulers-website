@@ -70,6 +70,6 @@ footer{background:#f4f6f8;border-top:1px solid var(--line);padding:24px 0;color:
 
 /* Trailer photo crop: zoom slightly to reduce parking-lot lines */
 .hero-photo img{
-  transform:scale(1.12);
-  transform-origin:center center;
+  transform:scale(1.28);
+  transform-origin:center 42%;
 }
