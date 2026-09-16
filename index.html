@@ -72,7 +72,7 @@
 <div class="quote-card"><h3>Upload Photos Online</h3><p>Send photos and answer a few quick questions so we can give you an accurate upfront price.</p><a class="btn primary" href="#quote-form">Start Quote</a></div>
 <div class="quote-card"><h3>Text Us Your Photos</h3><p>Prefer texting? Send photos and a short description directly to us.</p><a class="btn primary" href="sms:+19413230000">Text (941) 323-0000</a></div>
 </div>
-<form class="form" id="quote-form" onsubmit="return submitDemo(event)">
+<form class="form" id="quote-form" action="https://formspree.io/f/mzezbzjq" method="POST" enctype="multipart/form-data">
 <h3>Online Quote Request</h3><p><strong>Photos help us give you the most accurate upfront price.</strong> Please photograph everything you'd like removed.</p>
 <div class="fields">
 <label>Name<input name="name" required autocomplete="name"></label>
@@ -86,7 +86,7 @@
 <label style="grid-column:1/-1">What needs to be removed?<textarea name="details" required></textarea></label>
 </div>
 <button class="btn primary" type="submit">Send My Quote Request</button>
-<p id="form-note" style="font-size:13px;color:#667085">The form layout is ready. We’ll connect the delivery service before publishing.</p>
+<p id="form-note" style="font-size:13px;color:#667085">Your quote request will be sent directly to Knox Haulers.</p>
 </form>
 </div></section>
 </main>
