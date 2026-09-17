@@ -73,3 +73,33 @@ footer{background:#f4f6f8;border-top:1px solid var(--line);padding:24px 0;color:
   transform:scale(1.28);
   transform-origin:center 42%;
 }
+
+/* Desktop header adjustment: keep the Knox Haulers logo compact and balanced */
+@media (min-width:851px){
+  .nav{
+    min-height:96px;
+    gap:18px;
+  }
+
+  .brand{
+    flex:0 0 auto;
+    width:340px;
+    max-width:30vw;
+  }
+
+  .brand img{
+    width:100%;
+    height:auto;
+    max-height:170px;
+    object-fit:contain;
+  }
+
+  nav{
+    gap:16px;
+  }
+
+  .top-contact{
+    flex:0 0 auto;
+  }
+}
+
