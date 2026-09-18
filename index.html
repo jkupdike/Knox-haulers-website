@@ -1,100 +1,555 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Knox Haulers | Junk Removal in Sarasota</title>
-<meta name="description" content="Knox Haulers provides straightforward junk removal in Sarasota, Lakewood Ranch and surrounding areas. Call, text, or send photos for a quote.">
-<link rel="stylesheet" href="styles.css">
- <link rel="icon" type="image/png" href="assets/IMG_0932.png"> 
-<style>
-.inline-svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
-.service-svg{width:38px;height:38px;fill:none;stroke:#f4511e;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f4511e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Knox Haulers Estimator V7</title>
+  <style>
+    *{box-sizing:border-box}
+    :root{--bg:#f4511e;--card:#ffffff;--ink:#151515;--muted:#626262;--green:#f4511e;--green-dark:#171717;--green-mid:#f4511e;--lime:#f4511e;--line:#f4511e;--warn:#fff3e8;--danger:#ffe5df;--orange-soft:#f4511e;--orange-pale:#ffffff;--orange-border:#f4511e}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink)}
+    header{background:#f4511e;color:#fff;border-bottom:4px solid #171717;padding:calc(28px + env(safe-area-inset-top)) 20px 20px;position:sticky;top:0;z-index:2;box-shadow:0 10px 26px rgba(0,0,0,.18)}
+    header h1{font-size:27px;margin:0 0 6px;line-height:1.1}
+    header .sub{color:#fff3ef;font-size:17px}
+    main{max-width:720px;margin:auto;padding:20px 16px 60px;background:#f4511e}
+    .card{background:var(--card);border:2px solid #f4511e;border-radius:22px;padding:22px;margin:0 0 18px;box-shadow:0 8px 20px rgba(0,0,0,.08)}
+    h2{font-size:27px;margin:0 0 20px}
+    h3{font-size:20px;margin:0 0 14px}
+    label{display:block;font-weight:750;font-size:16px;margin:14px 0 7px}
+    input,select,textarea,button{font:inherit}
+    input,select,textarea{width:100%;padding:16px 14px;border:2px solid #d7d7d7;border-radius:16px;background:#fff;font-size:18px}
+    textarea{min-height:88px;resize:vertical}
+    input:focus,select:focus,textarea:focus{outline:2px solid rgba(244,81,30,.35);border-color:#f4511e}
+    h2{border-left:5px solid #f4511e;padding-left:10px}
+    header h1{font-weight:950;letter-spacing:.01em}
+    .primary,.secondary,.light{box-shadow:0 2px 0 rgba(0,0,0,.12)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media(max-width:560px){.grid2{grid-template-columns:1fr 1fr}.compact-stack{grid-template-columns:1fr}}
+    .muted{color:var(--muted);font-size:14px;line-height:1.4} .card .muted{color:#626262}
+    .owner{border:2px solid var(--lime)}
+    .owner-badge{display:inline-block;background:var(--green);color:#fff;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.04em;margin-bottom:10px;box-shadow:0 4px 12px rgba(244,81,30,.22)}
+    .warning{background:var(--warn);border:1px solid #f0ca72;border-radius:14px;padding:14px;margin-top:14px;font-weight:700}
+    .danger{background:var(--danger);border:1px solid #e7aaaa;border-radius:14px;padding:14px;margin-top:14px;font-weight:800}
+    .hidden{display:none!important}
+    .primary{width:100%;border:0;border-radius:16px;background:#f4511e;color:#fff;padding:17px;font-weight:850;font-size:20px}
+    .secondary{width:100%;border:0;border-radius:16px;background:#f4511e;color:#fff;padding:15px;font-weight:800;font-size:18px}
+    .light{width:100%;border:2px solid #f4511e;border-radius:16px;background:#ffffff;color:#111;padding:15px;font-weight:800;font-size:18px}
+    .itemrow{display:grid;grid-template-columns:1fr 100px 44px;gap:8px;align-items:end;margin-bottom:10px}
+    .itemrow label{margin:0}
+    .remove{border:1px solid #f4511e;border-radius:12px;background:#ffffff;height:50px;font-size:22px}
+    .results{background:#151515;color:#fff;border:3px solid #f4511e;border-radius:22px;padding:22px;margin:18px 0;box-shadow:0 12px 28px rgba(0,0,0,.18)}
+    .results .big{font-size:48px;font-weight:900;margin:5px 0 18px;color:var(--lime)}
+    .row{display:flex;justify-content:space-between;gap:14px;padding:5px 0;font-size:17px}
+    .row strong{text-align:right}
+    .divider{border-top:1px solid #aaa;margin:12px 0}
+    .profit{font-size:20px;font-weight:850;color:#fff}
+    .status{margin-top:14px;padding:12px;border-radius:12px;font-weight:900;text-align:center}
+    .status.good{background:#dff4e5;color:#14592a}
+    .status.review{background:#fff0c7;color:#6a4a00}
+    .status.low{background:#ffdede;color:#7b1616}
+    .quote{font-size:17px;line-height:1.5}
+    details summary{font-weight:850;font-size:20px;cursor:pointer}
+    .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;margin-top:14px}
+    .settings-grid label{font-size:14px}
+    .saved{padding:12px 0;border-bottom:1px solid #e4e4e4}
+    .saved:last-child{border-bottom:0}
+    .saved-actions{display:flex;gap:8px;margin-top:8px}
+    .saved-actions button{border:0;border-radius:10px;padding:8px 10px;font-weight:700}
+    html{background:#f4511e}
+    .primary{box-shadow:0 2px 0 rgba(0,0,0,.18)}
+    .primary:active,.secondary:active,.light:active{transform:translateY(1px)}
+  </style>
 </head>
 <body>
-<header><div class="container nav">
-<a class="brand" href="#home"><img src="assets/IMG_0919.PNG" alt="Knox Haulers Junk Removal"></a>
-<nav><a href="#home">Home</a><a href="#remove">What We Remove</a><a href="#how">How It Works</a><a href="#pricing">Pricing</a><a href="#area">Service Area</a><a href="#contact">Contact</a></nav>
-<div class="top-contact">(941) 323-0000<small>Sarasota and surrounding areas</small></div>
-<a class="btn primary" href="#quote">Get a Quote</a>
-<a class="btn primary mobile-only" href="tel:+19413230000">Call</a>
-</div></header>
+<header>
+  <h1>Knox Haulers Junk Removal</h1>
+  <div class="sub"><span style="display:inline-block;background:#f4511e;padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.55)">Sarasota • Quick Quote Estimator V7</span></div>
+</header>
 
 <main>
-<section class="hero" id="home"><div class="container hero-grid">
-<div><h1>JUNK GONE.<em>Simple as That.™</em></h1>
-<p class="lead">Fast, friendly junk removal in Sarasota and surrounding areas.</p>
-<div class="actions"><a class="btn primary" href="tel:+19413230000">☎ Call (941) 323-0000</a><a class="btn light" href="#quote"><svg class="inline-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4V5z"/><path d="M8 9h8M8 12h5"/></svg> Get a Quote</a></div>
-<div class="benefits">
-<div class="benefit"><div class="icon">✓</div>Residential & Commercial</div>
-<div class="benefit"><div class="icon">✓</div>Affordable, Upfront Pricing</div>
-<div class="benefit"><div class="icon">✓</div>Fast, Friendly Service</div>
-<div class="benefit"><div class="icon">✓</div>Locally Owned & Operated</div>
-</div></div>
-<div class="hero-photo"><img src="assets/knox-haulers-trailer.jpg" alt="Knox Haulers black 5 by 8 utility trailer"></div>
-</div></section>
+  <section class="card">
+    <h2>Customer / job</h2>
+    <div class="grid2 compact-stack">
+      <div><label for="cust_name">Customer name</label><input id="cust_name" autocomplete="name"></div>
+      <div><label for="cust_phone">Phone</label><input id="cust_phone" inputmode="tel" autocomplete="tel"></div>
+      <div><label for="cust_address">Address</label><input id="cust_address" autocomplete="street-address"></div>
+      <div><label for="job_date">Date</label><input id="job_date" type="date"></div>
+    </div>
+    <label for="notes">Notes</label>
+    <textarea id="notes" placeholder="Items, access notes, exclusions, etc."></textarea>
+  </section>
 
-<section id="remove"><div class="container">
-<div class="section-kicker">OUR SERVICES</div><h2 class="section-title">WHAT WE REMOVE</h2><p class="sub">If it’s taking up space, we can take it away.</p>
-<div class="services">
-<div class="card"><div class="big"><svg class="service-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11V8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v3"/><path d="M4 11a2 2 0 0 0-2 2v4h20v-4a2 2 0 0 0-2-2"/><path d="M5 17v2M19 17v2"/></svg></div><h3>Furniture</h3></div><div class="card"><div class="big"><svg class="service-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 7h.01M12 7h.01"/><circle cx="12" cy="14" r="4"/></svg></div><h3>Appliances</h3></div><div class="card"><div class="big"><svg class="service-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 7v10l8 4 8-4V7M12 11v10"/></svg></div><h3>Household Junk</h3></div><div class="card"><div class="big"><svg class="service-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10l9-7 9 7v11H3V10z"/><path d="M7 13h10v8H7zM7 16h10"/></svg></div><h3>Garage Cleanouts</h3></div><div class="card"><div class="big"><svg class="service-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V9"/><path d="M12 12C7 12 4 9 4 4c5 0 8 3 8 8z"/><path d="M12 15c5 0 8-3 8-8-5 0-8 3-8 8z"/></svg></div><h3>Yard Debris</h3></div><div class="card"><div class="big"><svg class="service-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10l9-7 9 7v11H3V10z"/><path d="M9 21v-7h6v7"/><path d="M17 6l3 0 0 3"/></svg></div><h3>Property Cleanouts</h3></div><div class="card"><div class="big"><svg class="service-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4l6 6"/><path d="M13 5l2-2 6 6-2 2"/><path d="M12 8L4 16l4 4 8-8"/><path d="M3 21h8"/></svg></div><h3>Light Demolition</h3></div><div class="card"><div class="big"><svg class="service-svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg></div><h3>And More</h3></div>
-</div></div></section>
+  <section class="card">
+    <h2>1. Load size</h2>
+    <label for="load">Estimated trailer load</label>
+    <select id="load"></select>
+    <p class="muted">Working trailer capacity: <strong>4.44 yd³</strong>. Physical trailer markings can stay simple: ¼ • ½ • ¾ • FULL.</p>
 
-<section class="soft" id="how"><div class="container">
-<h2 class="section-title">HOW IT WORKS</h2><p class="sub">A simple process from mess to gone.</p>
-<div class="steps">
-<div class="step"><div class="num">1</div><h3>Contact Us</h3><p>Call, text, or request a quote online. <strong>Send us a few photos</strong> of what you need removed.</p></div>
-<div class="step"><div class="num">2</div><h3>Get Your Price</h3><p>We review the photos and ask about heavy items, stairs, long carries, access, and anything else that could affect the job.</p></div>
-<div class="step"><div class="num">3</div><h3>We Load It</h3><p>Once you approve the price, we do the lifting and loading.</p></div>
-<div class="step"><div class="num">4</div><h3>We Haul It Away</h3><p>We clean up the area and haul everything away for proper disposal.</p></div>
-</div></div></section>
+    <label style="display:flex;gap:10px;align-items:center;margin-top:18px">
+      <input id="heavy_toggle" type="checkbox" style="width:auto;transform:scale(1.25)">
+      Heavy material / special job
+    </label>
+    <div id="heavy_warning" class="danger hidden">⚠ CUSTOM QUOTE — Do not use standard volume pricing. Check weight, disposal requirements and towing capacity before quoting.</div>
+  </section>
 
-<section id="pricing"><div class="container">
-<div class="section-kicker">SIMPLE, UPFRONT PRICING</div><h2 class="section-title">PRICING</h2><p class="sub">Straightforward pricing for loads of all sizes.</p><p class="sub">Pricing based on our 5' × 8' high-sided trailer.</p><div class="pricing">
-<div class="price-card"><h3>SMALL PICKUP<br>(MINIMUM)</h3><strong>$95</strong><span>A few items or a single bulky item.</span></div>
-<div class="price-card"><h3>¼ TRAILER LOAD</h3><strong>$175</strong><span>Great for small cleanups.</span></div>
-<div class="price-card"><h3>½ TRAILER LOAD</h3><strong>$275</strong><span>Ideal for medium jobs.</span></div>
-<div class="price-card"><h3>¾ TRAILER LOAD</h3><strong>$375</strong><span>For larger cleanouts.</span></div>
-<div class="price-card"><h3>FULL TRAILER LOAD</h3><strong>$475</strong><span>Maximum trailer capacity.</span></div>
-</div>
-<p class="disclaimer"><strong>Straightforward, upfront pricing.</strong> Final price depends on the amount and type of material, weight, access, stairs, long carries, and any special disposal requirements. We’ll confirm your price before work begins.</p>
-</div></section>
+  <section class="card">
+    <h2>2. Customer adjustments</h2>
+    <div class="grid2 compact-stack">
+      <div>
+        <label for="access">Access</label>
+        <select id="access">
+          <option value="0">Normal — included</option>
+          <option value="35">Difficult +$35</option>
+          <option value="75">Very difficult +$75</option>
+        </select>
+      </div>
+      <div>
+        <label for="labor_tier">Job labor time</label>
+        <select id="labor_tier">
+          <option value="0">Under 1 hour — included</option>
+          <option value="50">1–2 hours +$50</option>
+          <option value="100">2–3 hours +$100</option>
+          <option value="175">3–4 hours +$175</option>
+          <option value="custom">Over 4 hours — custom quote</option>
+        </select>
+      </div>
+    </div>
 
-<section class="soft"><div class="container results-area">
-<div><div class="section-kicker">REAL RESULTS</div><h2 class="section-title">FROM CLUTTERED TO CLEARED</h2><p class="sub">We do the lifting, loading and hauling.</p><div class="photo-pair"><div class="photo-slot"><span class="tag">BEFORE</span><img src="assets/before.jpg" alt="Garage before junk removal"></div><div class="photo-slot"><span class="tag">AFTER</span><img src="assets/after.jpg" alt="Garage after junk removal"></div></div></div>
-<div class="service-box" id="area"><h2>SERVICE AREA</h2><h3>Sarasota, Lakewood Ranch, and surrounding areas</h3><p>Our primary service area includes:</p><div class="areas"><span class="pill">Sarasota</span><span class="pill">Lakewood Ranch</span><span class="pill">Surrounding areas</span></div>
-<p>Not sure if you're in our service area? Call or text <strong>(941) 323-0000</strong> and we'll let you know.</p></div>
-</div></section>
+    <label for="customer_miles">Distance from base to customer (miles)</label>
+    <input id="customer_miles" type="number" min="0" step="0.1" value="0">
+    <div id="travel_hint" class="muted"></div>
+  </section>
 
-<section class="quote" id="quote"><div class="container quote-grid">
-<div><h2>GOT JUNK?<br>GET A QUOTE!</h2><p><em>Junk Gone. Simple as That.™</em></p><p>Choose whichever way is easiest.</p></div>
-<div class="quote-options">
-<div class="quote-card"><h3>Upload Photos Online</h3><p>Send photos and answer a few quick questions so we can give you an accurate upfront price.</p><a class="btn primary" href="#quote-form">Start Quote</a></div>
-<div class="quote-card"><h3>Text Us Your Photos</h3><p>Prefer texting? Send photos and a short description directly to us.</p><a class="btn primary" href="sms:+19413230000">Text (941) 323-0000</a></div>
-</div>
-<form class="form" id="quote-form" action="https://formspree.io/f/mzezbzjq" method="POST" enctype="multipart/form-data">
-<h3>Online Quote Request</h3><p><strong>Photos help us give you the most accurate upfront price.</strong> Please photograph everything you'd like removed.</p>
-<div class="fields">
-<label>Name<input name="name" required autocomplete="name"></label>
-<label>Mobile phone<input name="phone" required inputmode="tel" autocomplete="tel"></label>
-<label>ZIP code or neighborhood<input name="location" required></label>
-<label>Preferred timing<select name="timing"><option>ASAP</option><option>This week</option><option>Flexible</option></select></label>
-<label>Heavy items?<select name="heavy"><option>No</option><option>Yes</option><option>Not sure</option></select></label>
-<label>Stairs?<select name="stairs"><option>No</option><option>Yes</option></select></label>
-<label>Long carry or difficult access?<select name="access"><option>No</option><option>Yes</option><option>Not sure</option></select></label>
-<label>Photos<input type="file" name="photos" accept="image/*" multiple></label>
-<label style="grid-column:1/-1">What needs to be removed?<textarea name="details" required></textarea></label>
-</div>
-<button class="btn primary" type="submit">Send My Quote Request</button>
-<p id="form-note" style="font-size:13px;color:#667085">Your quote request will be sent directly to Knox Haulers.</p>
-</form>
-</div></section>
+  <section class="card">
+    <h2>3. Special items</h2>
+    <div id="items"></div>
+    <button class="light" type="button" onclick="addItem()">+ Add special item</button>
+    <p class="muted">Ordinary furniture is normally included by volume. Use a surcharge only for unusually heavy/awkward items.</p>
+  </section>
+
+  <section class="card owner">
+    <div class="owner-badge">PRIVATE — OWNER COSTS</div>
+    <h2>4. Your costs</h2>
+    <div class="grid2 compact-stack">
+      <div>
+        <label for="dump">Dump / disposal estimate</label>
+        <input id="dump" type="number" min="0" step="1">
+        <div class="muted">Suggested from load size; overwrite anytime.</div>
+      </div>
+      <div>
+        <label for="business_miles">Total business miles</label>
+        <input id="business_miles" type="number" min="0" step="0.1" value="0">
+        <div class="muted">Customer → dump → return, etc.</div>
+      </div>
+      <div>
+        <label for="helpers">Paid helpers</label>
+        <input id="helpers" type="number" min="0" step="1" value="0">
+      </div>
+      <div>
+        <label for="helper_hours">Helper hours each</label>
+        <input id="helper_hours" type="number" min="0" step="0.25" value="0">
+      </div>
+      <div>
+        <label for="owner_hours">Your hours</label>
+        <input id="owner_hours" type="number" min="0" step="0.25" value="1">
+      </div>
+      <div>
+        <label for="other_costs">Other direct costs</label>
+        <input id="other_costs" type="number" min="0" step="1" value="0">
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Courtesy discount</h2>
+    <label for="discount">Discount amount</label>
+    <input id="discount" type="number" min="0" step="1" value="0" inputmode="decimal">
+    <p class="muted">Optional. Enter any dollar amount you choose, such as $10, $25, $35 or $50. The regular price remains visible below.</p>
+  </section>
+
+  <button class="primary" type="button" onclick="calculate()">CALCULATE QUOTE</button>
+
+  <section id="results" class="results">
+    <div style="color:#cfcfcf">Final customer price</div>
+    <div class="big" id="r_total">$0</div>
+    <div class="row"><span>Regular price</span><strong id="r_regular">$0</strong></div>
+    <div class="row"><span>Courtesy discount</span><strong id="r_discount">$0</strong></div>
+    <div class="row"><span>Estimated volume</span><strong id="r_volume">0 yd³</strong></div>
+    <div class="row"><span>Base load price</span><strong id="r_base">$0</strong></div>
+    <div class="row"><span>Customer adjustments</span><strong id="r_adjust">$0</strong></div>
+    <div class="row"><span>Special items</span><strong id="r_special">$0</strong></div>
+    <div class="divider"></div>
+    <div style="color:#f4511e;font-weight:800;margin-bottom:5px">PRIVATE — OWNER ONLY</div>
+    <div class="row"><span>Disposal</span><strong id="r_dump">$0</strong></div>
+    <div class="row"><span>Vehicle allowance</span><strong id="r_vehicle">$0</strong></div>
+    <div class="row"><span>Paid helper cost</span><strong id="r_helper">$0</strong></div>
+    <div class="row"><span>Other direct costs</span><strong id="r_other">$0</strong></div>
+    <div class="row profit"><span>Estimated cash profit</span><strong id="r_cash">$0</strong></div>
+    <div class="row"><span>Owner labor value</span><strong id="r_owner">$0</strong></div>
+    <div class="row profit"><span>Profit after owner labor</span><strong id="r_profit">$0</strong></div>
+    <div class="row profit"><span>Estimated margin</span><strong id="r_margin">0%</strong></div>
+    <div id="margin_status" class="status hidden"></div>
+  </section>
+
+  <section class="card">
+    <h2>Customer quote</h2>
+    <div id="quote" class="quote" style="background:#ffffff;border:2px solid #f4511e;border-radius:16px;padding:16px">Calculate a quote first.</div>
+    <div style="height:12px"></div>
+    <button class="secondary" type="button" onclick="copyQuote()">Copy Quote</button>
+    <div style="height:10px"></div>
+    <button class="light" type="button" onclick="saveQuote()">Save Quote</button>
+    <div style="height:10px"></div>
+    <button class="light" type="button" onclick="newJob()">New Job</button>
+  </section>
+
+  <section class="card">
+    <details>
+      <summary>Pricing & owner settings</summary>
+      <p class="muted">These defaults are saved on this device. Change them anytime without editing GitHub.</p>
+      <h3>Base price ladder</h3>
+      <div id="price_settings" class="settings-grid"></div>
+      <h3 style="margin-top:20px">Owner cost rates</h3>
+      <div class="grid2 compact-stack">
+        <div><label for="mileage_rate">Vehicle allowance / mile</label><input id="mileage_rate" type="number" min="0" step="0.01" value="0.76"></div>
+        <div><label for="helper_rate">Helper cost / hour</label><input id="helper_rate" type="number" min="0" step="1" value="25"></div>
+        <div><label for="owner_rate">Owner labor value / hour</label><input id="owner_rate" type="number" min="0" step="1" value="30"></div>
+      </div>
+      <div style="height:12px"></div>
+      <button class="secondary" type="button" onclick="saveSettings()">Save Settings</button>
+    </details>
+  </section>
+
+  <section class="card">
+    <details open>
+      <summary>Saved quotes</summary>
+      <div id="saved_quotes" style="margin-top:12px"></div>
+    </details>
+  </section>
 </main>
 
-<footer id="contact"><div class="container foot">
-<div class="brand">KNOX <span>HAULERS</span><small>JUNK REMOVAL</small></div>
-<div><strong>(941) 323-0000</strong><br>KnoxHaulers.com<br>Sarasota and surrounding areas</div>
-<div>© 2026 Knox Haulers. All rights reserved.<br><span style="color:#667085">Privacy Policy</span></div>
-</div></footer>
-<script src="script.js"></script>
-</body></html>
+<script>
+const LOADS = [
+  {id:"min", label:"Minimum / very small", frac:0.09, volume:0.40, price:125, dump:15},
+  {id:"eighth", label:"1/8 load", frac:0.125, volume:0.56, price:150, dump:15},
+  {id:"quarter", label:"1/4 load", frac:0.25, volume:1.11, price:225, dump:20},
+  {id:"third", label:"1/3 load", frac:1/3, volume:1.48, price:275, dump:25},
+  {id:"half", label:"1/2 load", frac:0.5, volume:2.22, price:350, dump:35},
+  {id:"twothirds", label:"2/3 load", frac:2/3, volume:2.96, price:425, dump:45},
+  {id:"threequarters", label:"3/4 load", frac:0.75, volume:3.33, price:475, dump:50},
+  {id:"full", label:"Full load", frac:1, volume:4.44, price:600, dump:60}
+];
+
+const SPECIALS = [
+  {id:"none", label:"Choose item…", price:0},
+  {id:"mattress", label:"Mattress +$40", price:40},
+  {id:"boxspring", label:"Box spring +$30", price:30},
+  {id:"set", label:"Mattress + box spring set +$60", price:60},
+  {id:"fridge", label:"Refrigerator / freezer +$50", price:50},
+  {id:"washerdryer", label:"Washer / dryer +$35", price:35},
+  {id:"appliance", label:"Standard appliance +$30", price:30},
+  {id:"tv", label:"Large TV +$30", price:30},
+  {id:"tire", label:"Tire without rim +$20", price:20},
+  {id:"tirerim", label:"Tire with rim +$25", price:25},
+  {id:"heavy25", label:"Unusually heavy furniture +$25", price:25},
+  {id:"heavy50", label:"Very heavy furniture +$50", price:50},
+  {id:"custom", label:"Hot tub / dense or special debris — CUSTOM", price:0, custom:true}
+];
+
+let lastQuoteText = "";
+let dumpTouched = false;
+
+function money(n){ return "$"+Math.round(Number(n||0)).toLocaleString(); }
+function num(id){ return +(document.getElementById(id)?.value || 0); }
+function esc(s){ return String(s??"").replace(/[&<>"']/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m])); }
+
+function priceKey(id){ return "price_"+id; }
+
+function initLoadOptions(){
+  const sel=document.getElementById("load");
+  sel.innerHTML=LOADS.map(x=>`<option value="${x.id}">${x.label} — ${x.volume.toFixed(x.volume<1?2:2)} yd³</option>`).join("");
+  sel.value="half";
+  sel.addEventListener("change",()=>{
+    dumpTouched=false;
+    applySuggestedDump();
+  });
+}
+
+function renderPriceSettings(){
+  const box=document.getElementById("price_settings");
+  box.innerHTML=LOADS.map(x=>`<div><label for="${priceKey(x.id)}">${x.label}</label><input id="${priceKey(x.id)}" type="number" min="0" step="5" value="${x.price}"></div>`).join("");
+}
+
+function currentLoad(){
+  return LOADS.find(x=>x.id===document.getElementById("load").value) || LOADS[4];
+}
+
+function currentBasePrice(){
+  const l=currentLoad();
+  const el=document.getElementById(priceKey(l.id));
+  return +(el?.value || l.price);
+}
+
+function suggestedDump(){ return currentLoad().dump; }
+function applySuggestedDump(){
+  if(!dumpTouched) document.getElementById("dump").value=suggestedDump();
+}
+
+function travelCharge(miles){
+  miles=+miles||0;
+  if(miles<=10) return {charge:0,label:"0–10 miles: included",custom:false};
+  if(miles<=20) return {charge:10,label:"10–20 miles: +$10",custom:false};
+  if(miles<=30) return {charge:20,label:"20–30 miles: +$20",custom:false};
+  if(miles<=40) return {charge:35,label:"30–40 miles: +$35",custom:false};
+  if(miles<=50) return {charge:50,label:"40–50 miles: +$50",custom:false};
+  return {charge:0,label:"Over 50 miles: CUSTOM QUOTE",custom:true};
+}
+
+function updateTravelHint(){
+  const t=travelCharge(num("customer_miles"));
+  const el=document.getElementById("travel_hint");
+  el.textContent=t.label;
+  el.style.fontWeight=t.custom?"800":"400";
+}
+
+function addItem(selected="none", qty=1){
+  const box=document.getElementById("items");
+  const row=document.createElement("div");
+  row.className="itemrow";
+  const options=SPECIALS.map(s=>`<option value="${s.id}" ${s.id===selected?"selected":""}>${s.label}</option>`).join("");
+  row.innerHTML=`<div><label>Special item</label><select class="special_sel">${options}</select></div>
+    <div><label>Qty</label><input class="special_qty" type="number" min="0" step="1" value="${qty}"></div>
+    <button type="button" class="remove" aria-label="Remove item">×</button>`;
+  row.querySelector(".remove").onclick=()=>row.remove();
+  box.appendChild(row);
+}
+
+function specialTotals(){
+  let total=0, custom=false, text=[];
+  document.querySelectorAll(".itemrow").forEach(row=>{
+    const id=row.querySelector(".special_sel").value;
+    const qty=+(row.querySelector(".special_qty").value||0);
+    const s=SPECIALS.find(x=>x.id===id);
+    if(!s || id==="none" || qty<=0) return;
+    if(s.custom) custom=true;
+    else total += s.price*qty;
+    text.push(`${qty} × ${s.label.replace(/\s\+\$\d+$/,"").replace(/\s— CUSTOM$/,"")}`);
+  });
+  return {total,custom,text};
+}
+
+function calculate(){
+  const heavy=document.getElementById("heavy_toggle").checked;
+  const laborVal=document.getElementById("labor_tier").value;
+  const laborCustom=laborVal==="custom";
+  const t=travelCharge(num("customer_miles"));
+  const s=specialTotals();
+  const custom = heavy || laborCustom || t.custom || s.custom;
+
+  const l=currentLoad();
+  const base=currentBasePrice();
+  const access=num("access");
+  const labor=laborCustom?0:+laborVal;
+  const adjustments=access+labor+t.charge;
+  const regularTotal=custom?0:base+adjustments+s.total;
+  const requestedDiscount=Math.max(0,num("discount"));
+  const discount=custom?0:Math.min(requestedDiscount,regularTotal);
+  const total=custom?0:Math.max(0,regularTotal-discount);
+
+  const dump=num("dump");
+  const vehicle=num("business_miles")*num("mileage_rate");
+  const helper=num("helpers")*num("helper_hours")*num("helper_rate");
+  const other=num("other_costs");
+  const cash=total-dump-vehicle-helper-other;
+  const owner=num("owner_hours")*num("owner_rate");
+  const profit=cash-owner;
+  const margin=total>0?(profit/total*100):0;
+
+  document.getElementById("r_total").textContent=custom?"CUSTOM":money(total);
+  document.getElementById("r_regular").textContent=custom?"—":money(regularTotal);
+  document.getElementById("r_discount").textContent=custom?"—":(discount>0?"−"+money(discount):money(0));
+  document.getElementById("r_volume").textContent=l.volume.toFixed(2).replace(/0$/,"")+" yd³";
+  document.getElementById("r_base").textContent=money(base);
+  document.getElementById("r_adjust").textContent=money(adjustments);
+  document.getElementById("r_special").textContent=money(s.total);
+  document.getElementById("r_dump").textContent=money(dump);
+  document.getElementById("r_vehicle").textContent=money(vehicle);
+  document.getElementById("r_helper").textContent=money(helper);
+  document.getElementById("r_other").textContent=money(other);
+  document.getElementById("r_cash").textContent=custom?"—":money(cash);
+  document.getElementById("r_owner").textContent=money(owner);
+  document.getElementById("r_profit").textContent=custom?"—":money(profit);
+  document.getElementById("r_margin").textContent=custom?"—":Math.round(margin)+"%";
+
+  const status=document.getElementById("margin_status");
+  status.className="status";
+  if(custom){
+    status.textContent="CUSTOM QUOTE — REVIEW JOB MANUALLY";
+    status.classList.add("low");
+  }else if(margin>=50){
+    status.textContent="GOOD JOB ✓";
+    status.classList.add("good");
+  }else if(margin>=40){
+    status.textContent="ACCEPTABLE — REVIEW COSTS";
+    status.classList.add("review");
+  }else{
+    status.textContent="LOW MARGIN — REVIEW PRICE";
+    status.classList.add("low");
+  }
+
+  buildQuote({custom,l,total,regularTotal,discount,access,labor,travel:t,special:s});
+}
+
+function buildQuote(ctx){
+  const name=document.getElementById("cust_name").value.trim();
+  const phone=document.getElementById("cust_phone").value.trim();
+  const address=document.getElementById("cust_address").value.trim();
+  const date=document.getElementById("job_date").value;
+  const notes=document.getElementById("notes").value.trim();
+
+  if(ctx.custom){
+    lastQuoteText=`Knox Haulers Junk Removal\nCustom quote required for this job.`;
+    document.getElementById("quote").innerHTML=`<strong>Knox Haulers Junk Removal</strong><br><br><strong>CUSTOM QUOTE REQUIRED</strong><br>Please review weight, access, disposal and labor before giving a final price.`;
+    return;
+  }
+
+  const extras=[];
+  if(ctx.access>0) extras.push(`Access adjustment: ${money(ctx.access)}`);
+  if(ctx.labor>0) extras.push(`Additional labor: ${money(ctx.labor)}`);
+  if(ctx.travel.charge>0) extras.push(`Travel adjustment: ${money(ctx.travel.charge)}`);
+  if(ctx.special.text.length) extras.push(`Special items: ${ctx.special.text.join(", ")}`);
+
+  const lines=[
+    "Knox Haulers Junk Removal",
+    name?`Customer: ${name}`:"",
+    phone?`Phone: ${phone}`:"",
+    address?`Address: ${address}`:"",
+    date?`Date: ${date}`:"",
+    "",
+    `Estimated removal: ${ctx.l.volume.toFixed(2).replace(/0$/,"")} cubic yards`,
+    ...extras,
+    `Regular price: ${money(ctx.regularTotal)}`,
+    ctx.discount>0?`Courtesy discount: -${money(ctx.discount)}`:"",
+    `Total price: ${money(ctx.total)}`,
+    notes?`Notes: ${notes}`:"",
+    "",
+    "Thank you for the opportunity to earn your business."
+  ].filter(Boolean);
+
+  lastQuoteText=lines.join("\n");
+  document.getElementById("quote").innerHTML=lines.map(x=>esc(x)).join("<br>");
+}
+
+async function copyQuote(){
+  if(!lastQuoteText){ calculate(); }
+  try{
+    await navigator.clipboard.writeText(lastQuoteText);
+    alert("Quote copied.");
+  }catch(e){
+    alert("Copy did not work automatically. Press and hold the quote text to copy it.");
+  }
+}
+
+function saveSettings(){
+  const data={
+    prices:Object.fromEntries(LOADS.map(x=>[x.id, num(priceKey(x.id))])),
+    mileage_rate:num("mileage_rate"),
+    helper_rate:num("helper_rate"),
+    owner_rate:num("owner_rate")
+  };
+  localStorage.setItem("bg_v5_settings",JSON.stringify(data));
+  alert("Settings saved on this device.");
+}
+
+function loadSettings(){
+  try{
+    const s=JSON.parse(localStorage.getItem("bg_v5_settings")||"null");
+    if(!s) return;
+    if(s.prices) LOADS.forEach(x=>{ const el=document.getElementById(priceKey(x.id)); if(el && s.prices[x.id]!=null) el.value=s.prices[x.id]; });
+    ["mileage_rate","helper_rate","owner_rate"].forEach(k=>{ if(s[k]!=null) document.getElementById(k).value=s[k]; });
+  }catch(e){}
+}
+
+function getSavedQuotes(){
+  try{return JSON.parse(localStorage.getItem("bg_v5_quotes")||"[]");}catch(e){return [];}
+}
+
+function saveQuote(){
+  calculate();
+  if(!lastQuoteText) return;
+  const arr=getSavedQuotes();
+  arr.unshift({
+    id:Date.now(),
+    name:document.getElementById("cust_name").value.trim()||"Unnamed customer",
+    date:document.getElementById("job_date").value||new Date().toLocaleDateString(),
+    total:document.getElementById("r_total").textContent,
+    text:lastQuoteText
+  });
+  localStorage.setItem("bg_v5_quotes",JSON.stringify(arr.slice(0,50)));
+  renderSavedQuotes();
+}
+
+function renderSavedQuotes(){
+  const arr=getSavedQuotes();
+  const box=document.getElementById("saved_quotes");
+  if(!arr.length){ box.innerHTML='<div class="muted">No saved quotes yet.</div>'; return; }
+  box.innerHTML="";
+  arr.forEach(r=>{
+    const div=document.createElement("div");
+    div.className="saved";
+    div.innerHTML=`<strong>${esc(r.name)}</strong> — ${esc(r.total)}<br><span class="muted">${esc(r.date)}</span>
+      <div class="saved-actions"><button type="button">Copy</button><button type="button">Delete</button></div>`;
+    div.querySelectorAll("button")[0].onclick=()=>navigator.clipboard?.writeText(r.text);
+    div.querySelectorAll("button")[1].onclick=()=>{
+      localStorage.setItem("bg_v5_quotes",JSON.stringify(getSavedQuotes().filter(x=>x.id!==r.id)));
+      renderSavedQuotes();
+    };
+    box.appendChild(div);
+  });
+}
+
+function newJob(){
+  ["cust_name","cust_phone","cust_address","notes"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("job_date").value=new Date().toISOString().slice(0,10);
+  document.getElementById("load").value="half";
+  document.getElementById("access").value="0";
+  document.getElementById("labor_tier").value="0";
+  document.getElementById("customer_miles").value=0;
+  document.getElementById("business_miles").value=0;
+  document.getElementById("helpers").value=0;
+  document.getElementById("helper_hours").value=0;
+  document.getElementById("owner_hours").value=1;
+  document.getElementById("other_costs").value=0;
+  document.getElementById("discount").value=0;
+  document.getElementById("heavy_toggle").checked=false;
+  document.getElementById("heavy_warning").classList.add("hidden");
+  document.getElementById("items").innerHTML="";
+  addItem();
+  dumpTouched=false;
+  applySuggestedDump();
+  updateTravelHint();
+  calculate();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  initLoadOptions();
+  renderPriceSettings();
+  loadSettings();
+  document.getElementById("job_date").value=new Date().toISOString().slice(0,10);
+  document.getElementById("dump").addEventListener("input",()=>dumpTouched=true);
+  document.getElementById("customer_miles").addEventListener("input",updateTravelHint);
+  document.getElementById("heavy_toggle").addEventListener("change",e=>{
+    document.getElementById("heavy_warning").classList.toggle("hidden",!e.target.checked);
+  });
+  addItem();
+  applySuggestedDump();
+  updateTravelHint();
+  renderSavedQuotes();
+  calculate();
+});
+</script>
+</body>
+</html>
