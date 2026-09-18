@@ -91,7 +91,7 @@ footer{background:#f4f6f8;border-top:1px solid var(--line);padding:24px 0;color:
     width:100%;
     height:auto;
     max-height:170px;
-    object-fit:contain;
+    object-fit:contain;display:block;clip-path:inset(0 2px 2px 0);
   }
 
   nav{
